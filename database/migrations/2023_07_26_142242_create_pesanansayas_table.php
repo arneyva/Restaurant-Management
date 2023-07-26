@@ -13,14 +13,7 @@ return new class extends Migration
     {
         Schema::create('pesanansayas', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('doctor')->nullable();
-            $table->string('date')->nullable();
-            $table->string('message')->nullable();
-            $table->string('status')->nullable();
-            $table->string('user_id')->nullable();
+            
             $table->timestamps();
         });
     }
