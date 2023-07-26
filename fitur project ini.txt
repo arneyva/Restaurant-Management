@@ -1,0 +1,4 @@
+-ada bagian admin(backend),user yang belum login,user yang sudah login
+-dapat memesan menu makanan hanya jika sudah login
+-authentication pake livewire jestream dengan stack livewire
+-menu makanan terdiri dari(id,nama,deskripsi,harga,foto)
