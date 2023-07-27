@@ -44,6 +44,7 @@
         </div>
         <!-- header section strats -->
         @include('users.header')
+        @include('admin.pesan')
         <!-- end header section -->
         <!-- slider section -->
         <section class="slider_section ">
@@ -309,6 +310,7 @@
 
     <!-- book section -->
     {{-- pesan menu --}}
+    
     @include('users.pesanmenu')
     {{-- pesan menu end --}}
     <!-- end book section -->

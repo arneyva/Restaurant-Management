@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Makanan;
+use App\Models\Pesanansaya;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,8 +46,36 @@ class HomeController extends Controller
     }
 
     public function pesanansaya()  {
-        $makanan = Makanan::all();
-        return view('users.pesanansaya',compact('makanan'));
+        if (Auth::id()) {
+            # code...
+            $userid=Auth::user()->id;
+            $makanan=pesanansaya::where('user_id',$userid)->get();
+            return view('users.pesanansaya',compact('makanan'));
+        }else{
+            return redirect()->back();
+        };
+        
+    }
+
+// fungsi untuk memproses ketika mau pesan menu
+    // kaya fungsi store dan update
+    public function berhasilpesanmenu(Request $request){
+        $data = new Pesanansaya();
+        $data->nama=$request->nama;
+        $data->email=$request->email;
+        $data->namamakanan=$request->namamakanan;
+        $data->qty=$request->qty;
+        $data->catatan=$request->catatan;
+        $data->date=$request->date;
+        $data->status='In Progres';
+        // cara bacanya adalah jika sudah login
+        if (Auth::id()) {
+            # code...
+            // maka user_id pada row di pesanan saya=id users yang login
+            $data->user_id=Auth::user()->id;
+        }
+        $data->save();
+        return redirect()->back()->with('pesan','Sukses Melakukan Pemesanan !!!');
         
     }
 }

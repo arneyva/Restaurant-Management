@@ -8,20 +8,21 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form_container">
-                    <form action="">
+                    <form action="{{url('berhasilpesanmenu')  }}" method="POST">
+                        @csrf
                         <div>
-                            <input type="text" class="form-control" placeholder="Nama Pemesan" />
+                            <input type="text" class="form-control" placeholder="Nama Pemesan" name="nama" />
                         </div>
                         {{-- <div>
                             <input type="text" class="form-control" placeholder="Phone Number" />
                         </div> --}}
                        
                         <div>
-                            <input type="email" class="form-control" placeholder="Email Pemesan" />
+                            <input type="email" class="form-control" placeholder="Email Pemesan" name="email" />
                         </div>
                         <div>
                             {{-- <input type="text" class="form-control" placeholder="" /> --}}
-                            <select class="form-control" id="" name="doctor">
+                            <select class="form-control" id="" name="namamakanan">
                                 <option value="">Menu Yang Dipesan</option>
                                 @foreach ($makanan as $makanan)
                                     <option value="{{ $makanan->nama }}">
@@ -32,10 +33,13 @@
                             </select>
                         </div>
                         <div>
-                            <input type="text" class="form-control" placeholder="Jumlah" />
+                            <input type="text" class="form-control" placeholder="Jumlah" name="qty" />
                         </div>
                         <div>
-                            <input type="date" class="form-control">
+                            <input type="text" class="form-control" placeholder="Catatan" name="catatan" />
+                        </div>
+                        <div>
+                            <input type="date" class="form-control" name="date" placeholder="dd/mm/yy">
                         </div>
                         <div class="btn_box">
                             <button>

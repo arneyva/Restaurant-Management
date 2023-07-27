@@ -151,21 +151,21 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    {{-- @foreach ($data as $makanan) --}}
+                                    @foreach ($makanan as $pesanan)
                                     <tr>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>$</td>
-                                        <td>#</td>
-                                        <td>#</td>
+                                        <td>{{ $pesanan->nama }}</td>
+                                        <td>{{ $pesanan->namamakanan }}</td>
+                                        <td>{{ $pesanan->qty }}</td>
+                                        <td>{{ $pesanan->date }}</td>
+                                        <td>{{ $pesanan->pesan }}</td>
+                                        <td>{{ $pesanan->status }}</td>
                                         <td>
                                             <a class="btn btn-warning" href="#" onclick="confirm('Beneran?')">Cancel </a>
                                             {{-- <a class="btn btn-success" href="#" onclick="confirm('Beneran?')">Update </a> --}}
         
                                         </td>
                                     </tr>  
-                                    {{-- @endforeach --}}
+                                    @endforeach
                                     
                                     
                                 </tbody>

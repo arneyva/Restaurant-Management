@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home',[HomeController::class,'redirect']);
 Route::get('/',[HomeController::class,'index']);
 Route::get('/pesanansaya',[HomeController::class,'pesanansaya']);
+Route::post('/berhasilpesanmenu',[HomeController::class,'berhasilpesanmenu']);
 
 // AdminController
 Route::get('/detailmenu',[AdminController::class,'detailmenu']);
