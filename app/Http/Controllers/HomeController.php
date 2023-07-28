@@ -57,7 +57,7 @@ class HomeController extends Controller
         
     }
 
-// fungsi untuk memproses ketika mau pesan menu
+    // fungsi untuk memproses ketika mau pesan menu
     // kaya fungsi store dan update
     public function berhasilpesanmenu(Request $request){
         $data = new Pesanansaya();
@@ -76,6 +76,15 @@ class HomeController extends Controller
         }
         $data->save();
         return redirect()->back()->with('pesan','Sukses Melakukan Pemesanan !!!');
+        
+    }
+
+    public function cancelpesanansaya($id) {
+        $data=pesanansaya::find($id);
+        $data->delete();
+        return redirect()->back()->with('pesan','Orderan anda Dibatalkan!!');
+
+
         
     }
 }

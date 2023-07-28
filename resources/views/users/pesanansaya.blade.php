@@ -160,7 +160,8 @@
                                         <td>{{ $pesanan->pesan }}</td>
                                         <td>{{ $pesanan->status }}</td>
                                         <td>
-                                            <a class="btn btn-warning" href="#" onclick="confirm('Beneran?')">Cancel </a>
+                                            {{-- menggunakan id --}}
+                                            <a class="btn btn-warning" href="{{ url('cancelpesanansaya',$pesanan->id) }}" onclick="confirm('Beneran?')">Cancel </a>
                                             {{-- <a class="btn btn-success" href="#" onclick="confirm('Beneran?')">Update </a> --}}
         
                                         </td>

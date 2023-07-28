@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Makanan;
+use App\Models\Pesanansaya;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -24,7 +26,8 @@ class AdminController extends Controller
     //fungsi untuk menampilkan bagian  menu pesanan
     public function menupesanan()
     {
-    return view('admin.menupesanan');    
+        $data=Pesanansaya::all();
+    return view('admin.menupesanan',compact('data'));    
     }
 
     // fungsi untuk memproses ketika mau menambah menu
@@ -95,5 +98,122 @@ class AdminController extends Controller
         // $doctor->save();
         // return redirect()->back()->with('pesan','Sukses Menambah Data Dokter !!!');
     }
+
+    public function terimapesanan($id){
+        $data=Pesanansaya::find($id);
+        
+        $data->status=' Pesanan di Terima';
+        $data->save(); 
+        return redirect()->back();
+    }
+
+    public function tolakpesanan($id){
+        $data=Pesanansaya::find($id);
+        
+        $data->status='Pesanan di Tolak';
+        $data->save(); 
+        return redirect()->back();
+    }
+
+    public function updatemenu($id){
+        $data=Makanan::find($id);
+        return view('admin.updatemenu',compact('data'));
+        // $data = Doctor::where('id', $id)->first();
+        // return view('admin.updatedoctor')->with('data', $data);
+        
+    }
+
+    // fungsi nya untuk menyimpan perubahaan data
+    public function berhasilupdatemenu(Request $request, string $id)
+    {
+        //
+        // return 'sukses merubah data';
+
+        // data gaboleh diedit jadi kosong
+        // data2 yang harus diisi
+        $request->validate([
+            'nama' => 'required',
+            'deskripsi' => 'required ',
+            'harga' => 'required | numeric',
+            // mimes = ekstensi foto
+            'foto' => 'required | mimes:jpg,bmp,png'
+        ], [
+            // bikin pesan custom
+            'nama.required' => 'Nama Wajib Di isi !!!',
+            'deskripsi.required' => 'deskripsi Wajib Di isi !!!',
+            'harga.required' => 'harga Wajib Di isi !!!',
+            'harga.numeric' => 'harga Wajib Berupa Angka !!!',
+            
+            'foto.required' => 'Silahkan Upload Foto !!!',
+            'foto.mimes' => 'Foto Harus Berkestensi JPG,BMP,PNG !!!',
+        ]);
+
+        // bikin variabel untuk menampung data hasil inputan (kecuali foto)
+        // harus sama2 tampung data
+        $tampung_data =[
+            'nama' => $request->input('nama'),
+            'deskripsi' => $request->input('deskripsi'),
+            'harga' => $request->input('harga'),
+            
+        ];
+
+        // proses mengupdate data foto
+        if ($request->hasFile('foto')) {
+            // proses meminta inputan
+            $request->validate([
+                // mimes = ekstensi foto
+                'foto' => ' required | mimes:jpg,bmp,png,jpeg'
+
+            ], [
+                'foto.required' => "Foto Wajib Di isi yaa !!!",
+                'foto.mimes' => "Dalam Ekstensi (PNG,JPG,HEIC)",
+            ]);            
+        
+        //  $minta_foto => $nama_foto
+        // variabel $mintafoto = minta (file) dengan atribut name=foto
+        $minta_foto = $request->file('foto');
+        // proses memfilter file tadi harus berkstensi (jpg,png,bmp)
+        $ekstensi_foto = $minta_foto->extension();
+        // bikin nama foto sesuai tgl upload
+        $nama_foto = date('ymdhis').".".$ekstensi_foto;
+        // foto tadi disimpan di suatu folder didalam folder public
+        $minta_foto->move(public_path('featured_image'),$nama_foto);
+        //   sudah terupload ke direktori
+
+            // proses menghapus foto lama
+            $foto_lama = Makanan::where('id', $id)->first();
+            File::delete(public_path('featured_image') . '/' . $foto_lama->foto);
+            // harus sama2 tampung data
+            $tampung_data['foto'] = $nama_foto;
+        }
+
+        // Models => Update =>dengan data yang di simpan oleh variabel $tampungdata
+        // harus sama2 tampung data
+        Makanan::where('id',$id)->update($tampung_data);
+        return redirect()->back()->with('pesan','Sukses Mengupdate Dataa !!!');
+    }
+
+    public function berhasildeletemenu($id){
+        // foto tidak ikut terhapus
+        // $data=Makanan::find($id);
+
+        // $data->delete();
+        // return redirect()->back()->with('pesan','Sukses Menghapus Menu !!!');
+
+        //
+        // agar jika didelete,foto yang ada di folder public juga ikut ke hapus
+        //  variabel $tampungfoto mencari data berdasarkan id
+        // harus sama2 tampung data
+        $tampung_data = Makanan::where('id', $id)->first();
+        // ,lalu ketika udah ketemu maka akan didelete (mendelet nama file didalam direktori foto di publik)
+        // harus sama2 tampung data
+        File::delete(public_path('featured_image') . '/' . $tampung_data->foto);
+
+
+        Makanan::where('id', $id)->delete();
+        return redirect()->back()->with('pesan', 'Berhasil MengHapus Menu');
+        
+    }
+
 
 }

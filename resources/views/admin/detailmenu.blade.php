@@ -92,8 +92,8 @@
                                             <td>Rp{{ $makanan->harga }}</td>
                                             <td><img width="50px" height="50px" src="featured_image/{{ $makanan->foto }}" alt=""></td>
                                             <td>
-                                                <a class="btn btn-warning" href="#" onclick="confirm('Beneran?')">Delete </a>
-                                                <a class="btn btn-success" href="#" onclick="confirm('Beneran?')">Update </a>
+                                                <a class="btn btn-danger" href="{{ url('berhasildeletemenu',$makanan->id) }}" onclick="confirm('Beneran?')">Delete </a>
+                                                <a class="btn btn-success" href="{{ url('updatemenu',$makanan->id) }}" >Update </a>
 
                                             </td>
                                         </tr>  

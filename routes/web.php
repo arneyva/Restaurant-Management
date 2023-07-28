@@ -24,12 +24,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home',[HomeController::class,'redirect']);
 Route::get('/',[HomeController::class,'index']);
 Route::get('/pesanansaya',[HomeController::class,'pesanansaya']);
+Route::get('/cancelpesanansaya/{id}',[HomeController::class,'cancelpesanansaya']);
 Route::post('/berhasilpesanmenu',[HomeController::class,'berhasilpesanmenu']);
 
 // AdminController
 Route::get('/detailmenu',[AdminController::class,'detailmenu']);
 Route::get('/tambahmenu',[AdminController::class,'tambahmenu']);
 Route::get('/menupesanan',[AdminController::class,'menupesanan']);
+Route::get('/terimaorderan/{id}',[AdminController::class,'terimapesanan']);
+Route::get('/tolakorderan/{id}',[AdminController::class,'tolakpesanan']);
+Route::get('/updatemenu/{id}',[AdminController::class,'updatemenu']);
+Route::get('/berhasildeletemenu/{id}',[AdminController::class,'berhasildeletemenu']);
+Route::put('/berhasil_update_menu/{id}',[AdminController::class,'berhasilupdatemenu']);
 // pake post karena berhubungan dengan mengirim form/data
 Route::post('/berhasil_upload_menu',[AdminController::class,'berhasil_upload_menu']);
 
